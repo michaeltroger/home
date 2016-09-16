@@ -69,7 +69,7 @@
 <div class="left">
 <img class="video" src="http://192.168.1.161:8081"></iframe>
 <table class="sensor-container">
-   <tr><td>Last motion</td><td><%=lastMotion%></td></tr>
+   <tr><td>Last motion</td><td><%= lastMotion.getFullYear()+'-'+lastMotion.getMonth()+'-'+lastMotion.getDate()+' '+lastMotion.getHours()+':'+lastMotion.getMinutes() %></td></tr>
    <tr><td>Inside</td><td><%=sensor_1%>°C</td></tr>
    <tr><td>Outside</td><td><%=sensor_2%>°C</td></tr>
 </table>
