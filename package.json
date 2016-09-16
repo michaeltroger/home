@@ -1,0 +1,26 @@
+{
+  "name": "home",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaeltroger/home.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaeltroger/home/issues"
+  },
+  "homepage": "https://github.com/michaeltroger/home#readme",
+  "dependencies": {
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "mongoose": "^4.6.0",
+    "node-schedule": "^1.1.1"
+  }
+}

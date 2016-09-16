@@ -1,3 +1,7 @@
+#custom rules
+#connection url to mongodb
+config/db_url
+
 # Logs
 logs
 *.log

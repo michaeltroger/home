@@ -1,0 +1,109 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mike's home</title>
+<style>
+    body {
+        margin:0;
+	padding:10px;
+        font-family: sans-serif;
+        text-transform: uppercase;
+        background-color:black;
+        color:white;
+    }
+
+    .title {
+        margin: 0;
+    }
+
+    .video {
+        max-width:100%;
+        height: auto;
+        margin-top:15px;
+        margin-bottom: 15px;
+    }
+
+    .sensor-container {
+	font-size:1.4em;
+     text-align:left;
+        border-spacing:10px;
+
+    }
+
+    .sensor {
+    }
+    .old-temps {
+	text-align:left;
+	border-spacing:10px;
+    }
+
+    .old-temps-graph {
+    }
+
+
+    .old-temps-bar {
+	color:black;
+        background:white;  
+	border:1px solid black;
+    }
+    .left {
+	float:left;
+    }
+    .right {
+	float:right;
+    }
+    .left, .right {
+	width:50%;
+    }
+    .clear {
+	clear:both;
+    }
+
+</style>
+</head>
+<body>
+<h1 class="title">Mike's home</h1>
+<div class="clear">
+<div class="left">
+<img class="video" src="http://192.168.1.161:8081"></iframe>
+<table class="sensor-container">
+   <tr><td>Last motion</td><td><%=lastMotion%></td></tr>
+   <tr><td>Inside</td><td><%=sensor_1%>°C</td></tr>
+   <tr><td>Outside</td><td><%=sensor_2%>°C</td></tr>
+</table>
+</div>
+<div class="right">
+<table class="old-temps">
+ <tr><th>Time</th><th>Inside</th><th>Outside</th></tr>
+ <% oldTemps.forEach(function(oldTemp){ %>
+  <tr><td><%= oldTemp.time.getFullYear()+'-'+oldTemp.time.getMonth()+'-'+oldTemp.time.getDate()+' '+oldTemp.time.getHours()+':'+oldTemp.time.getMinutes() %></td><td><%= oldTemp.sensor1 %></td><td><%= oldTemp.sensor2 %></td></tr>
+ <% }); %>
+</table>
+</div>
+</div>
+
+<div class="clear">
+<div class="left old-temps-graph">
+ <p>Inside</p>
+ <% oldTemps.forEach(function(oldTemp){ %>
+  <div class="old-temps-bar" style="width:<%= oldTemp.sensor1 * 2.5 %>%"><%= oldTemp.sensor1 %>°C</div>
+ <% }); %>
+</div>
+
+<div class="right old-temps-graph">
+ <p>Outside</p>
+ <% oldTemps.forEach(function(oldTemp){ %>
+  <div class="old-temps-bar" style="width:<%= oldTemp.sensor2 * 2.5 %>%"><%= oldTemp.sensor2 %>°C</div>
+ <% }); %>
+</div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
