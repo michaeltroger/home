@@ -19,7 +19,7 @@ mongoose.connection.on('error', function (err) {
 	mongoose.connect(db_url);
 });
 
-var timeLastMotion = null;
+var timeLastMotion = Date();
 
 var getSensorData = function(sensorId, callback) {
 	fs.readFile('/sys/bus/w1/devices/' + sensorId + '/w1_slave', 'utf8', function (err, data) {
