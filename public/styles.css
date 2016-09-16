@@ -1,0 +1,48 @@
+ body {
+    margin:0;
+    padding:10px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    background-color:black;
+    color:white;
+}
+
+.title {
+    margin: 0;
+}
+
+.video {
+    max-width:100%;
+    height: auto;
+    margin-top:15px;
+    margin-bottom: 15px;
+}
+
+.sensor-container {
+    font-size:1.4em;
+    text-align:left;
+    border-spacing:10px;
+}
+
+.old-temps {
+    text-align:left;
+    border-spacing:10px;
+}
+
+.old-temps-bar {
+    color:black;
+    background:white;  
+    border:1px solid black;
+}
+.left {
+    float:left;
+}
+.right {
+    float:right;
+}
+.left, .right {
+    width:50%;
+}
+.clear {
+    clear:both;
+}
