@@ -51,7 +51,7 @@ var j = schedule.scheduleJob('*/30 * * * *', function(){
 	 }); // end getSensorData
 });
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
 	Temperature.find({}).sort({time: -1}).limit(20).exec(function(err, docs) { 
