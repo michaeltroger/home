@@ -35,9 +35,9 @@ var getSensorData = function(sensorId, callback) {
 
 
 var j = schedule.scheduleJob('*/30 * * * *', function(){
-	getSensorData(sensor[0], function(response) {
+	getSensorData(sensors[0], function(response) {
 		var sensor1Data = response;
-		getSensorData(sensor[1], function(response) {
+		getSensorData(sensors[1], function(response) {
 			var sensor2Data = response;                          
 			var temperature = new Temperature({ sensor1: sensor1Data, sensor2: sensor2Data });
 		          
@@ -59,9 +59,9 @@ app.get('/', function(req, res){
 		}
 		var oldTemps = docs;
 	
-		getSensorData(sensor[0], function(response) {
+		getSensorData(sensors[0], function(response) {
 			var sensor1Data = response;
-			getSensorData(sensor[1], function(response) {
+			getSensorData(sensors[1], function(response) {
 					var sensor2Data = response;
       	               
 					res.render('index', {
