@@ -1,5 +1,7 @@
 #Home surveillance with Node.js for Raspberry Pi
 
+![home](home.png)
+
 Necessary hardware:
 - Raspberry Pi
 - USB Webcam or Raspberry Camera configured with Motion (livestream has to be enabled)
