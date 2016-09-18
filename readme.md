@@ -7,7 +7,7 @@ Necessary hardware:
 
 Install dependencies: `npm install`
 
-Create a file:
+Create a file for handling your MongoDB database configuration:
 `config/db_url` with the following content (fill out your connection details):
 ```
 var monodbUrl = 'mongodb://<user>:<password>@<server>:<port>/<database>';
