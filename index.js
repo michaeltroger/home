@@ -19,12 +19,14 @@ var fs = require('fs');
 var express = require('express');
 var schedule = require('node-schedule');
 var mongoose = require('mongoose');
+var request = require('request');
 
 var db_url = require('./config/db_url');
 var models = require('./config/models');
 var Temperature = models.tempModel;
 var Motion = models.motionModel;
 var sensors = require('./config/sensors');
+var esp8266Url = require('./config/esp8266');
 
 var app = express();
 app.set('view engine', 'ejs');
@@ -66,6 +68,14 @@ var j = schedule.scheduleJob('*/30 * * * *', function(){
 
 		 }); // end getSensorData
 	 }); // end getSensorData
+
+	 request(esp8266Url, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var result = JSON.parse(body);
+			console.log('temp: ' + result.temp);
+			console.log('hum: ' + result.hum);
+		}
+	 });
 });
 
 app.use(express.static(__dirname + '/public'));
@@ -105,12 +115,6 @@ app.get('/motion', function(req, res){
 		}
 		res.json({message:'successfully saved in db'});
 	});
-});
-
-// not yet fully implemented for receiving temperature from ESP8266 with DHT-22
-app.get('/temphum', function(req, res){
-	console.log('temp: ' + req.query.t + ' hum: '+ req.query.h);
-	res.json({message:'allright!'});
 });
 
 // not yet fully implemented for receiving door open status from ESP8266 with a magnetic switch
