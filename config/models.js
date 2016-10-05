@@ -22,6 +22,10 @@ var tempSchema = new mongoose.Schema(
     {
         sensor1: Number,
         sensor2: Number,
+        sensor3: {
+            temp: Number,
+            hum: Number
+        },
         time : { type : Date, default: Date.now }
     }
 );
@@ -36,9 +40,18 @@ var motionSchema = new mongoose.Schema(
 var Motion = mongoose.model('Motion', motionSchema);
 
 
+var doorSchema = new mongoose.Schema(
+    {
+        time : { type : Date, default: Date.now } 
+    }
+);
+var Door = mongoose.model('Door', doorSchema);
+
+
 var schemas = {
    tempModel: Temperature,
-   motionModel: Motion
+   motionModel: Motion,
+   doorModel: Door
 };
 
 module.exports = schemas;

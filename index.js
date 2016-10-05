@@ -25,6 +25,7 @@ var db_url = require('./config/db_url');
 var models = require('./config/models');
 var Temperature = models.tempModel;
 var Motion = models.motionModel;
+var Door = models.doorModel;
 var sensors = require('./config/sensors');
 var esp8266Url = require('./config/esp8266');
 
@@ -39,6 +40,7 @@ mongoose.connection.on('error', function (err) {
 });
 
 var timeLastMotion = new Date();
+var timeDoorOpened = new Date();
 
 var getSensorData = function(sensorId, callback) {
 	fs.readFile('/sys/bus/w1/devices/' + sensorId + '/w1_slave', 'utf8', function (err, data) {
@@ -57,25 +59,34 @@ var j = schedule.scheduleJob('*/30 * * * *', function(){
 	getSensorData(sensors[0], function(response) {
 		var sensor1Data = response;
 		getSensorData(sensors[1], function(response) {
-			var sensor2Data = response;                          
-			var temperature = new Temperature({ sensor1: sensor1Data, sensor2: sensor2Data });
-		          
-			temperature.save(function (err) { 
-				if(err) {
-					return console.log(err);
-				}  
-			});  
+			var sensor2Data = response;          
+
+			request(esp8266Url, function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					var result = JSON.parse(body);
+					var temperature = new Temperature({
+						 sensor1: sensor1Data, 
+						 sensor2: sensor2Data,
+						 sensor3: {
+							 temp: result.temp,
+							 hum: result.hum
+						 }
+					});
+						
+					temperature.save(function (err) { 
+						if(err) {
+							return console.log(err);
+						}  
+					});  
+				}
+			});
+
+		
 
 		 }); // end getSensorData
 	 }); // end getSensorData
 
-	 request(esp8266Url, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result = JSON.parse(body);
-			console.log('temp: ' + result.temp);
-			console.log('hum: ' + result.hum);
-		}
-	 });
+
 });
 
 app.use(express.static(__dirname + '/public'));
@@ -96,7 +107,8 @@ app.get('/', function(req, res){
 						sensor_1: sensor1Data, 
 						sensor_2: sensor2Data, 
 						oldTemps: oldTemps, 
-						lastMotion: timeLastMotion
+						lastMotion: timeLastMotion,
+						doorOpened: timeDoorOpened
 					});
  
 			}); // end getSensorData
@@ -119,8 +131,15 @@ app.get('/motion', function(req, res){
 
 // not yet fully implemented for receiving door open status from ESP8266 with a magnetic switch
 app.get('/door', function(req, res){
-	console.log('door opened!');
-	res.json({message:'door opened!'});
+	timeDoorOpened = new Date();
+	var door = new Door();
+
+	door.save(function (err) { 
+		if(err) { 
+			res.json({message: err }); 
+		}
+		res.json({message:'successfully saved in db'});
+	});
 });
 
 app.listen(3000);
