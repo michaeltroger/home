@@ -107,10 +107,17 @@ app.get('/motion', function(req, res){
 	});
 });
 
+// not yet fully implemented for receiving temperature from ESP8266 with DHT-22
 app.get('/esp8266', function(req, res){
 	console.log('esp8266 called!');
 	console.log('temp: ' + req.query.t + ' hum: '+ req.query.h);
 	res.json({message:'allright!'});
+});
+
+// not yet fully implemented for receiving door open status from ESP8266 with a magnetic switch
+app.get('/door', function(req, res){
+	console.log('door opened!');
+	res.json({message:'door opened!'});
 });
 
 app.listen(3000);
