@@ -108,8 +108,7 @@ app.get('/motion', function(req, res){
 });
 
 // not yet fully implemented for receiving temperature from ESP8266 with DHT-22
-app.get('/esp8266', function(req, res){
-	console.log('esp8266 called!');
+app.get('/temphum', function(req, res){
 	console.log('temp: ' + req.query.t + ' hum: '+ req.query.h);
 	res.json({message:'allright!'});
 });
